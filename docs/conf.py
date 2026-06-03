@@ -1,7 +1,7 @@
 # Configuration file for the Sphinx documentation builder.
 import os, sys
 sys.path.insert(0, os.path.abspath('../src'))
-
+autodoc_mock_imports = ["torch", "torchvision"]
 project   = "SAGA"
 copyright = "2026, Siju K.S. et al."
 author    = "Siju K.S., Vipin Venugopal, Mithun Kumar Kar, Jayakrishnan Anandakrishnan"
