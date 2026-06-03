@@ -5,12 +5,16 @@ build:
   os: ubuntu-22.04
   tools:
     python: "3.10"
+  jobs:
+    build:
+      html:
+        - python -m pip install --upgrade pip setuptools
+        - python -m pip install -r docs/requirements.txt
+        - mkdir -p $READTHEDOCS_OUTPUT/html
+        # Notice we use 'docs/' here instead of '.'
+        - python -m sphinx -T -b html docs/ $READTHEDOCS_OUTPUT/html
 
-# This is the block that was missing! It tells RTD where conf.py is.
+# This satisfies the RTD validator
 sphinx:
   builder: html
   configuration: docs/conf.py
-
-python:
-  install:
-    - requirements: docs/requirements.txt

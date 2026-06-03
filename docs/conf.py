@@ -2,6 +2,7 @@
 import os, sys
 sys.path.insert(0, os.path.abspath('../src'))
 autodoc_mock_imports = ["torch", "torchvision"]
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**/_build']
 project   = "SAGA"
 copyright = "2026, Siju K.S. et al."
 author    = "Siju K.S., Vipin Venugopal, Mithun Kumar Kar, Jayakrishnan Anandakrishnan"
