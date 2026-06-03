@@ -6,14 +6,13 @@ build:
   tools:
     python: "3.10"
   jobs:
-    # We take complete manual control of the build to prevent crashes
     build:
       html:
-        # 1. Install the required tools
+        # 1. Install Sphinx
         - python -m pip install --upgrade pip setuptools
         - python -m pip install sphinx
-        - python -m pip install .[dev]
-        # 2. Create the output folder
+        # 2. Install SAGA *without* downloading PyTorch
+        - python -m pip install --no-deps .
+        # 3. Create output folder and run Sphinx
         - mkdir -p $READTHEDOCS_OUTPUT/html
-        # 3. Run Sphinx strictly on the docs/ folder with low memory
         - python -m sphinx -T -b html docs/ $READTHEDOCS_OUTPUT/html
