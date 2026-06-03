@@ -5,6 +5,8 @@ env/
 # Python Cache
 __pycache__/
 *.pyc
+# doc files
+docs/_build/
 
 # Distribution / Build files
 dist/
