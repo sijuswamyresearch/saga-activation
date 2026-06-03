@@ -1,6 +1,4 @@
 # Read the Docs configuration file
-# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
-
 version: 2
 
 build:
@@ -8,15 +6,14 @@ build:
   tools:
     python: "3.10"
   jobs:
-    # Explicitly override the build command to prevent memory spikes
+    # We take complete manual control of the build to prevent crashes
     build:
       html:
+        # 1. Install the required tools
+        - python -m pip install --upgrade pip setuptools
+        - python -m pip install sphinx
+        - python -m pip install .[dev]
+        # 2. Create the output folder
         - mkdir -p $READTHEDOCS_OUTPUT/html
+        # 3. Run Sphinx strictly on the docs/ folder with low memory
         - python -m sphinx -T -b html docs/ $READTHEDOCS_OUTPUT/html
-
-python:
-  install:
-    - method: pip
-      path: .
-      extra_requirements:
-        - dev
