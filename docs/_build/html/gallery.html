@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Performance and Visual Gallery &mdash; SAGA Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="API Reference" href="api.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SAGA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="math.html">Mathematical Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Performance and Visual Gallery</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#visual-comparison-best-in-class-models">Visual Comparison: Best-in-Class Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#chest-ct-deblurring-resnet-backbone">Chest CT Deblurring (ResNet Backbone)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#osteoporosis-dxa-quality-resnet-backbone">Osteoporosis DXA Quality (ResNet Backbone)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#quantitative-benchmarks">Quantitative Benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#computational-efficiency">Computational Efficiency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#citation">Citation</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SAGA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Performance and Visual Gallery</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gallery.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="performance-and-visual-gallery">
+<h1>Performance and Visual Gallery<a class="headerlink" href="#performance-and-visual-gallery" title="Link to this heading"></a></h1>
+<p>The SAGA operator has been rigorously evaluated across multiple baseline architectures (VGGNet, ResNet, U-Net, EDSR) and state-of-the-art activation functions (Sigmoid, Tanh, ReLU, Swish, ELU, FReLU).</p>
+<p>Below is a curated summary of the visual performance, alongside exhaustive quantitative ablation studies and computational efficiency metrics.</p>
+<section id="visual-comparison-best-in-class-models">
+<h2>Visual Comparison: Best-in-Class Models<a class="headerlink" href="#visual-comparison-best-in-class-models" title="Link to this heading"></a></h2>
+<p><em>SAGA selectively routes gradients to preserve fine anatomical boundaries while suppressing uniform background noise, outperforming standard parameterless and parametric activations.</em></p>
+<section id="chest-ct-deblurring-resnet-backbone">
+<h3>Chest CT Deblurring (ResNet Backbone)<a class="headerlink" href="#chest-ct-deblurring-resnet-backbone" title="Link to this heading"></a></h3>
+<p><img alt="CT Deblurring Comparison" src="_images/ct_comparison.png" />
+<em>(Visual comparison using ResNet on a representative Chest X-ray sample. (a) Blurry input, (b) Ground truth, (c) Sigmoid, (d) Tanh, (e) ReLU, (f) Swish, (g) ELU, (h) FReLU, (i) SAGA. Notice the structural preservation of the pulmonary and rib margins in the SAGA output).</em></p>
+</section>
+<section id="osteoporosis-dxa-quality-resnet-backbone">
+<h3>Osteoporosis DXA Quality (ResNet Backbone)<a class="headerlink" href="#osteoporosis-dxa-quality-resnet-backbone" title="Link to this heading"></a></h3>
+<p><img alt="DXA Scan Comparison" src="_images/dxa_comparison.png" />
+<em>(Visual comparison using ResNet on a representative Osteoporosis X-ray sample. (a) Blurry input, (b) Ground truth, (c) Sigmoid, (d) Tanh, (e) ReLU, (f) Swish, (g) ELU, (h) FReLU, (i) SAGA. SAGA ensures that the high-frequency details of trabecular bone margins are maintained).</em></p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="quantitative-benchmarks">
+<h2>Quantitative Benchmarks<a class="headerlink" href="#quantitative-benchmarks" title="Link to this heading"></a></h2>
+<p>SAGA consistently yields the highest Peak Signal-to-Noise Ratio (PSNR) and Structural Similarity Index Measure (SSIM) across both clinical modalities and all network backbones, demonstrating universal architectural compatibility.</p>
+<p><em>Best results in each architectural category are highlighted in bold.</em></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Architecture</p></th>
+<th class="head text-left"><p>Activation</p></th>
+<th class="head text-left"><p>CT Deblurring PSNR (dB)</p></th>
+<th class="head text-left"><p>CT Deblurring SSIM</p></th>
+<th class="head text-left"><p>Osteoporosis DXA PSNR (dB)</p></th>
+<th class="head text-left"><p>Osteoporosis DXA SSIM</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>VGGNet</strong></p></td>
+<td class="text-left"><p>Sigmoid</p></td>
+<td class="text-left"><p>26.45 ± 3.89</p></td>
+<td class="text-left"><p>0.74 ± 0.14</p></td>
+<td class="text-left"><p>35.82 ± 8.42</p></td>
+<td class="text-left"><p>0.88 ± 0.11</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Tanh</p></td>
+<td class="text-left"><p>30.91 ± 4.24</p></td>
+<td class="text-left"><p>0.84 ± 0.12</p></td>
+<td class="text-left"><p>35.81 ± 8.39</p></td>
+<td class="text-left"><p>0.87 ± 0.12</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>ReLU</p></td>
+<td class="text-left"><p>26.45 ± 3.86</p></td>
+<td class="text-left"><p>0.73 ± 0.14</p></td>
+<td class="text-left"><p>36.13 ± 8.93</p></td>
+<td class="text-left"><p>0.88 ± 0.11</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Swish</p></td>
+<td class="text-left"><p>26.44 ± 3.88</p></td>
+<td class="text-left"><p>0.74 ± 0.14</p></td>
+<td class="text-left"><p>36.02 ± 8.73</p></td>
+<td class="text-left"><p>0.88 ± 0.11</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>ELU</p></td>
+<td class="text-left"><p>31.35 ± 4.11</p></td>
+<td class="text-left"><p>0.85 ± 0.11</p></td>
+<td class="text-left"><p>44.56 ± 14.60</p></td>
+<td class="text-left"><p>0.90 ± 0.10</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>FReLU</p></td>
+<td class="text-left"><p>35.60 ± 4.47</p></td>
+<td class="text-left"><p>0.93 ± 0.04</p></td>
+<td class="text-left"><p>44.84 ± 8.50</p></td>
+<td class="text-left"><p>0.95 ± 0.04</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>SAGA</strong></p></td>
+<td class="text-left"><p><strong>37.16 ± 4.77</strong></p></td>
+<td class="text-left"><p><strong>0.96 ± 0.04</strong></p></td>
+<td class="text-left"><p><strong>50.33 ± 10.26</strong></p></td>
+<td class="text-left"><p><strong>0.98 ± 0.02</strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>ResNet</strong></p></td>
+<td class="text-left"><p>Sigmoid</p></td>
+<td class="text-left"><p>26.93 ± 3.81</p></td>
+<td class="text-left"><p>0.72 ± 0.14</p></td>
+<td class="text-left"><p>42.62 ± 14.80</p></td>
+<td class="text-left"><p>0.89 ± 0.11</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Tanh</p></td>
+<td class="text-left"><p>30.52 ± 3.81</p></td>
+<td class="text-left"><p>0.83 ± 0.11</p></td>
+<td class="text-left"><p>45.75 ± 14.10</p></td>
+<td class="text-left"><p>0.91 ± 0.09</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>ReLU</p></td>
+<td class="text-left"><p>31.39 ± 4.20</p></td>
+<td class="text-left"><p>0.85 ± 0.07</p></td>
+<td class="text-left"><p>46.79 ± 15.10</p></td>
+<td class="text-left"><p>0.95 ± 0.09</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Swish</p></td>
+<td class="text-left"><p>29.28 ± 4.00</p></td>
+<td class="text-left"><p>0.80 ± 0.13</p></td>
+<td class="text-left"><p>44.78 ± 13.20</p></td>
+<td class="text-left"><p>0.91 ± 0.09</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>ELU</p></td>
+<td class="text-left"><p>28.89 ± 3.96</p></td>
+<td class="text-left"><p>0.79 ± 0.13</p></td>
+<td class="text-left"><p>45.01 ± 14.02</p></td>
+<td class="text-left"><p>0.91 ± 0.09</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>FReLU</p></td>
+<td class="text-left"><p>30.38 ± 3.93</p></td>
+<td class="text-left"><p>0.83 ± 0.12</p></td>
+<td class="text-left"><p>46.29 ± 11.35</p></td>
+<td class="text-left"><p>0.93 ± 0.03</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>SAGA</strong></p></td>
+<td class="text-left"><p><strong>34.93 ± 4.20</strong></p></td>
+<td class="text-left"><p><strong>0.93 ± 0.07</strong></p></td>
+<td class="text-left"><p><strong>48.82 ± 9.58</strong></p></td>
+<td class="text-left"><p><strong>0.97 ± 0.07</strong></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>U-Net</strong></p></td>
+<td class="text-left"><p>Sigmoid</p></td>
+<td class="text-left"><p>27.35 ± 3.86</p></td>
+<td class="text-left"><p>0.72 ± 0.15</p></td>
+<td class="text-left"><p>37.97 ± 7.22</p></td>
+<td class="text-left"><p>0.85 ± 0.12</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Tanh</p></td>
+<td class="text-left"><p>28.41 ± 3.77</p></td>
+<td class="text-left"><p>0.76 ± 0.13</p></td>
+<td class="text-left"><p>35.94 ± 7.98</p></td>
+<td class="text-left"><p>0.83 ± 0.11</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>ReLU</p></td>
+<td class="text-left"><p>32.18 ± 3.98</p></td>
+<td class="text-left"><p>0.87 ± 0.10</p></td>
+<td class="text-left"><p>41.32 ± 10.10</p></td>
+<td class="text-left"><p>0.89 ± 0.10</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Swish</p></td>
+<td class="text-left"><p>29.49 ± 3.91</p></td>
+<td class="text-left"><p>0.81 ± 0.11</p></td>
+<td class="text-left"><p>41.35 ± 10.30</p></td>
+<td class="text-left"><p>0.87 ± 0.10</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>ELU</p></td>
+<td class="text-left"><p>29.06 ± 3.99</p></td>
+<td class="text-left"><p>0.79 ± 0.13</p></td>
+<td class="text-left"><p>36.92 ± 8.56</p></td>
+<td class="text-left"><p>0.86 ± 0.11</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>FReLU</p></td>
+<td class="text-left"><p>34.01 ± 3.98</p></td>
+<td class="text-left"><p>0.90 ± 0.08</p></td>
+<td class="text-left"><p>42.21 ± 9.25</p></td>
+<td class="text-left"><p>0.92 ± 0.05</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>SAGA</strong></p></td>
+<td class="text-left"><p><strong>36.33 ± 4.05</strong></p></td>
+<td class="text-left"><p><strong>0.95 ± 0.06</strong></p></td>
+<td class="text-left"><p><strong>44.86 ± 10.02</strong></p></td>
+<td class="text-left"><p><strong>0.94 ± 0.05</strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>EDSR</strong></p></td>
+<td class="text-left"><p>Sigmoid</p></td>
+<td class="text-left"><p>27.74 ± 3.88</p></td>
+<td class="text-left"><p>0.76 ± 0.13</p></td>
+<td class="text-left"><p>39.65 ± 11.37</p></td>
+<td class="text-left"><p>0.88 ± 0.11</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Tanh</p></td>
+<td class="text-left"><p>30.01 ± 3.94</p></td>
+<td class="text-left"><p>0.82 ± 0.12</p></td>
+<td class="text-left"><p>42.04 ± 13.32</p></td>
+<td class="text-left"><p>0.90 ± 0.09</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>ReLU</p></td>
+<td class="text-left"><p>29.98 ± 4.13</p></td>
+<td class="text-left"><p>0.82 ± 0.12</p></td>
+<td class="text-left"><p>43.72 ± 13.16</p></td>
+<td class="text-left"><p>0.91 ± 0.09</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>Swish</p></td>
+<td class="text-left"><p>30.30 ± 4.01</p></td>
+<td class="text-left"><p>0.83 ± 0.12</p></td>
+<td class="text-left"><p>42.70 ± 11.37</p></td>
+<td class="text-left"><p>0.87 ± 0.11</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p>ELU</p></td>
+<td class="text-left"><p>27.44 ± 3.90</p></td>
+<td class="text-left"><p>0.76 ± 0.13</p></td>
+<td class="text-left"><p>43.63 ± 13.11</p></td>
+<td class="text-left"><p>0.89 ± 0.10</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p>FReLU</p></td>
+<td class="text-left"><p>34.43 ± 4.38</p></td>
+<td class="text-left"><p>0.91 ± 0.01</p></td>
+<td class="text-left"><p>40.44 ± 8.68</p></td>
+<td class="text-left"><p>0.88 ± 0.09</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>SAGA</strong></p></td>
+<td class="text-left"><p><strong>38.05 ± 4.64</strong></p></td>
+<td class="text-left"><p><strong>0.96 ± 0.03</strong></p></td>
+<td class="text-left"><p><strong>47.97 ± 8.92</strong></p></td>
+<td class="text-left"><p><strong>0.97 ± 0.03</strong></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="computational-efficiency">
+<h2>Computational Efficiency<a class="headerlink" href="#computational-efficiency" title="Link to this heading"></a></h2>
+<p>A critical advantage of SAGA is its ability to deliver state-of-the-art spatial gating without compromising the computational feasibility of the network.</p>
+<p>The following evaluation details the deblurring fidelity against the computational cost, measured on real clinical samples using an 8-core CPU environment. SAGA achieves substantial gains in image quality while maintaining competitive parameter counts and inference latency compared to standard baselines.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Method</p></th>
+<th class="head text-left"><p>PSNR (dB)</p></th>
+<th class="head text-left"><p>SSIM</p></th>
+<th class="head text-left"><p>Params (M)</p></th>
+<th class="head text-left"><p>FLOPS (G)</p></th>
+<th class="head text-left"><p>Latency (ms)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>ReLU</p></td>
+<td class="text-left"><p>31.39</p></td>
+<td class="text-left"><p>0.85</p></td>
+<td class="text-left"><p>1.38</p></td>
+<td class="text-left"><p>154.81</p></td>
+<td class="text-left"><p>939</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>FReLU</p></td>
+<td class="text-left"><p>30.38</p></td>
+<td class="text-left"><p>0.83</p></td>
+<td class="text-left"><p>1.39</p></td>
+<td class="text-left"><p>156.32</p></td>
+<td class="text-left"><p>335</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>SAGA</strong></p></td>
+<td class="text-left"><p><strong>34.93</strong></p></td>
+<td class="text-left"><p><strong>0.93</strong></p></td>
+<td class="text-left"><p><strong>1.46</strong></p></td>
+<td class="text-left"><p><strong>165.22</strong></p></td>
+<td class="text-left"><p><strong>899</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><em>Note: SAGA’s highly optimized depthwise-separable architecture allows it to significantly outperform FReLU in metric quality, while actually executing with lower latency than the baseline network.</em></p>
+</section>
+<section id="citation">
+<h2>Citation<a class="headerlink" href="#citation" title="Link to this heading"></a></h2>
+<p>If you use the SAGA package or find this work helpful in your research, please cite the foundational manuscript:</p>
+<blockquote>
+<div><p>Siju K.S., Vipin Venugopal, Mithun Kumar Kar, Jayakrishnan Anandakrishnan (2026). <em>An interpretable deep learning method for medical image deblurring and restoration</em>. Healthcare Analytics.
+<strong>DOI:</strong> <a class="reference external" href="https://doi.org/10.1016/j.health.2026.100468">https://doi.org/10.1016/j.health.2026.100468</a></p>
+</div></blockquote>
+<p><strong>BibTeX:</strong></p>
+<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@article</span><span class="p">{</span><span class="nl">siju2026interpretable</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{An interpretable deep learning method for medical image deblurring and restoration}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Siju, KS and Venugopal, Vipin and Kar, Mithun Kumar and Anandakrishnan, Jayakrishnan}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">journal</span><span class="p">=</span><span class="s">{Healthcare Analytics}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">pages</span><span class="p">=</span><span class="s">{100468}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">year</span><span class="p">=</span><span class="s">{2026}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">publisher</span><span class="p">=</span><span class="s">{Elsevier}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">doi</span><span class="p">=</span><span class="s">{10.1016/j.health.2026.100468}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">url</span><span class="p">=</span><span class="s">{[https://doi.org/10.1016/j.health.2026.100468](https://doi.org/10.1016/j.health.2026.100468)}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Siju K.S. et al..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

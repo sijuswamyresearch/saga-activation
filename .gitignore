@@ -1,0 +1,18 @@
+# Virtual Environments
+venv/
+env/
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Distribution / Build files
+dist/
+build/
+*.egg-info/
+
+# Datasets
+data/
+
+# OS files
+.DS_Store

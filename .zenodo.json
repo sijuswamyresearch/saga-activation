@@ -1,0 +1,32 @@
+{
+  "title": "SAGA: Spatially-Adaptive Gated Activation for Medical Image Restoration",
+  "description": "Python package implementing the SAGA activation operator introduced in 'An interpretable deep learning method for medical image deblurring and restoration' (Healthcare Analytics, 2026). Includes the core SAGA module, pre-built residual blocks, utilities for gate curriculum training, and a full pytest test suite.",
+  "version": "0.1.0",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "MIT",
+  "creators": [
+    {"name": "Siju K.S.",                    "affiliation": "Author Institution, Kerala, India"},
+    {"name": "Venugopal, Vipin",              "affiliation": "Author Institution, Kerala, India"},
+    {"name": "Kar, Mithun Kumar",             "affiliation": "Author Institution, Kerala, India"},
+    {"name": "Anandakrishnan, Jayakrishnan",  "affiliation": "Author Institution, Kerala, India"}
+  ],
+  "keywords": [
+    "deep learning",
+    "activation function",
+    "medical imaging",
+    "image restoration",
+    "deblurring",
+    "PyTorch",
+    "spatial gating",
+    "CNN"
+  ],
+  "related_identifiers": [
+    {
+      "relation": "isSupplementTo",
+      "identifier": "https://doi.org/10.1016/j.health.2026.100468",
+      "resource_type": "publication-article"
+    }
+  ],
+  "language": "eng"
+}
