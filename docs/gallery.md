@@ -17,7 +17,35 @@ Below is a curated summary of the visual performance, alongside exhaustive quant
 *(Visual comparison using ResNet on a representative Osteoporosis X-ray sample. (a) Blurry input, (b) Ground truth, (c) Sigmoid, (d) Tanh, (e) ReLU, (f) Swish, (g) ELU, (h) FReLU, (i) SAGA. SAGA ensures that the high-frequency details of trabecular bone margins are maintained).*
 
 ---
-
+---
+ 
+## Natural Image Dehazing
+ 
+SAGA transfers directly to the natural image dehazing domain. The only
+modification to each dehazing architecture is replacing every intermediate
+activation with `SAGA(in_channels=C)` — no other structural change is made.
+Both models are trained on the
+[RESIDE-6K dataset](https://www.kaggle.com/datasets/kmljts/reside-6k)
+(4,500 training pairs; 1,000 test pairs).
+ 
+### AOD-Net and DEA-Net: ReLU vs SAGA
+ 
+![Dehazing Comparison](images/dehaze_comparison.png)
+ 
+*(Dehazing comparison on representative RESIDE-6K test images. Each block shows
+(left to right): hazy input, ReLU baseline output, SAGA output, ground truth.
+**Top block:** AOD-Net. **Bottom block:** DEA-Net. SAGA recovers finer structural
+detail at object boundaries — building edges, foliage, road markings — while
+assigning near-zero gate values to uniform haze regions, suppressing artefacts
+in flat sky areas.)*
+ 
+> **To reproduce these results**, see the training scripts in the
+> [SAGA GitHub repository](https://github.com/sijuswamyresearch/SAGA).
+> Both architectures require `pip install saga-activation` and a RESIDE-6K
+> download. DEA-Net results are reported at epoch 25; AOD-Net results are
+> averaged over the full 1,000-image test set.
+ 
+---
 ## Quantitative Benchmarks
 
 ### Medical image restoration
