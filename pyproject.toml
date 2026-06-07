@@ -9,7 +9,7 @@ description = "Spatially-Adaptive Gated Activation (SAGA) for medical image rest
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
-  { name = "Siju K.S.",               email = "sijuswamyresearch@.gmail.com" },
+  { name = "Siju K.S.",               email = "sijuswamyresearch@gmail.com" },
   { name = "Vipin Venugopal" },
   { name = "Mithun Kumar Kar" },
   { name = "Jayakrishnan Anandakrishnan" },
