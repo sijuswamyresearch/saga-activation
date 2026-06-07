@@ -3,7 +3,7 @@
 [![CI](https://github.com/sijuswamyresearch/saga-activation/actions/workflows/ci.yml/badge.svg)](https://github.com/sijuswamyresearch/saga-activation/actions)
 [![PyPI version](https://badge.fury.io/py/saga-activation.svg)](https://pypi.org/project/saga-activation/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![DOI](https://zenodo.org/badge/20582649.svg)](https://doi.org/10.5281/zenodo.20582649)
+[![DOI](https://zenodo.org/badge/1258149652.svg)](https://doi.org/10.5281/zenodo.20582649)
 [![Paper](https://img.shields.io/badge/Paper-Healthcare%20Analytics-blue)](https://doi.org/10.1016/j.health.2026.100468)
 
 > **An Interpretable Deep Learning Method for Medical Image Deblurring and Restoration** > Siju K.S., Vipin Venugopal, Mithun Kumar Kar, Jayakrishnan Anandakrishnan  
