@@ -1,6 +1,6 @@
 # SAGA — Spatially-Adaptive Gated Activation
 
-[![CI](https://github.com/sijuswamyresearch/SAGA/actions/workflows/ci.yml/badge.svg)](https://github.com/sijuswamyresearch/SAGA/actions)
+[![CI](https://github.com/sijuswamyresearch/saga-activation/actions/workflows/ci.yml/badge.svg)](https://github.com/sijuswamyresearch/saga-activation/actions)
 [![PyPI version](https://badge.fury.io/py/saga-activation.svg)](https://pypi.org/project/saga-activation/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/doi.org/10.5281/zenodo.20582649)](https://doi.org/10.5281/zenodo.20582649)

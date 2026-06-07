@@ -22,7 +22,7 @@ from importlib.metadata import version, PackageNotFoundError
 try:
     __version__: str = version("saga-activation")
 except PackageNotFoundError:
-    __version__ = "0.1.0"
+    __version__ = "0.1.4"
 
 from .activation import SAGA, SAGALayer
 from .blocks import SAGAResBlock, SAGABottleneck

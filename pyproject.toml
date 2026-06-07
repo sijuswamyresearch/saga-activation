@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "saga-activation"
-version = "0.1.3"
+version = "0.1.4"
 description = "Spatially-Adaptive Gated Activation (SAGA) for medical image restoration"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
-  { name = "Siju K.S.",               email = "sijuks@example.com" },
+  { name = "Siju K.S.",               email = "sijuswamyresearch@.gmail.com" },
   { name = "Vipin Venugopal" },
   { name = "Mithun Kumar Kar" },
   { name = "Jayakrishnan Anandakrishnan" },
