@@ -6,7 +6,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**/_build']
 project   = "SAGA"
 copyright = "2026, Siju K.S. et al."
 author    = "Siju K.S., Vipin Venugopal, Mithun Kumar Kar, Jayakrishnan Anandakrishnan"
-release   = "0.1.0"
+release   = "0.1.3"
 
 extensions = [
     "sphinx.ext.autodoc",

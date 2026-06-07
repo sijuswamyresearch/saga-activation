@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "saga-activation"
-version = "0.1.1"
+version = "0.1.3"
 description = "Spatially-Adaptive Gated Activation (SAGA) for medical image restoration"
 readme = "README.md"
 license = { text = "MIT" }
@@ -47,7 +47,7 @@ docs = [
 
 [project.urls]
 Homepage      = "https://github.com/sijuswamyresearch/saga-activation"
-Documentation = "https://sijuswamyresearch.github.io/saga-activation"
+Documentation = "https://saga-activation.readthedocs.io/en/latest/"
 Repository    = "https://github.com/sijuswamyresearch/saga-activation"
 "Bug Tracker" = "https://github.com/sijuswamyresearch/saga-activation/issues"
 Paper         = "https://doi.org/10.1016/j.health.2026.100468"

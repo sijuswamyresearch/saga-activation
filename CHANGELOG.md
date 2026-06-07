@@ -3,7 +3,7 @@
 All notable changes to SAGA are documented here.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
-## [0.1.0] — 2026-06-03
+## [0.1.3] — 2026-06-03
 
 ### Added
 - Core `SAGA` operator (`saga.activation`) implementing dynamic spatial gating, 

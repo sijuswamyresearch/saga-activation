@@ -20,6 +20,8 @@ Below is a curated summary of the visual performance, alongside exhaustive quant
 
 ## Quantitative Benchmarks
 
+### Medical image restoration
+
 SAGA consistently yields the highest Peak Signal-to-Noise Ratio (PSNR) and Structural Similarity Index Measure (SSIM) across both clinical modalities and all network backbones, demonstrating universal architectural compatibility. 
 
 *Best results in each architectural category are highlighted in bold.*
@@ -55,7 +57,28 @@ SAGA consistently yields the highest Peak Signal-to-Noise Ratio (PSNR) and Struc
 |              | FReLU      | 34.43 ± 4.38            | 0.91 ± 0.01        | 40.44 ± 8.68               | 0.88 ± 0.09           |
 |              | **SAGA** | **38.05 ± 4.64** | **0.96 ± 0.03** | **47.97 ± 8.92** | **0.97 ± 0.03** |
 
+
 ---
+ 
+### Natural image dehazing (RESIDE-6K)
+ 
+ReLU is the activation used in the published implementations of each
+architecture. SAGA replaces every intermediate activation with no other
+structural change.
+ 
+| Architecture                                                                 | Activation | PSNR (dB) ↑ | SSIM ↑    | Extra params |
+| ---------------------------------------------------------------------------- | ---------- | ----------- | --------- | ------------ |
+| [AOD-Net](https://github.com/Boyiliee/AOD-Net) (Li et al., ICCV 2017)       | ReLU       | 22.31       | 0.861     | —            |
+|                                                                              | **SAGA**   | **23.79**   | **0.881** | ~2,400       |
+| [DEA-Net](https://github.com/cecret3350/DEA-Net) (Chen et al., TIP 2024)    | ReLU       | 24.1        | 0.951     | —            |
+|                                                                              | **SAGA**   | **25.7**    | **0.967** | <3%          |
+| **Mean SAGA gain**                                                           |            | **+1.54 dB**| **+0.018**|              |
+ 
+> DEA-Net results reported at epoch 25 of training on RESIDE-6K.
+> AOD-Net results averaged over the full RESIDE-6K test set (1,000 images).
+ 
+---
+
 
 ## Computational Efficiency
 
@@ -83,7 +106,7 @@ If you use the SAGA package or find this work helpful in your research, please c
 ```bibtex
 @article{siju2026interpretable,
   title={An interpretable deep learning method for medical image deblurring and restoration},
-  author={Siju, KS and Venugopal, Vipin and Kar, Mithun Kumar and Anandakrishnan, Jayakrishnan},
+  author={Siju, KS and Vipin Venugopal and Mithun Kumar Kar and Jayakrishnan Anandakrishnan},
   journal={Healthcare Analytics},
   pages={100468},
   year={2026},

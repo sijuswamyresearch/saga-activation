@@ -33,7 +33,7 @@ pip install saga-activation
 ```
 Or install from source:
 ```bash
-git clone [https://github.com/sijuswamyresearch/SAGA.git](https://github.com/sijuswamyresearch/SAGA.git)
+git clone [https://github.com/sijuswamyresearch/saga-activation.git](https://github.com/sijuswamyresearch/saga-activation.git)
 cd SAGA
 pip install -e ".[dev]"
 ```
