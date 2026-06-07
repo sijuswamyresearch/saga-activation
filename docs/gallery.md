@@ -28,21 +28,17 @@ Both models are trained on the
 [RESIDE-6K dataset](https://www.kaggle.com/datasets/kmljts/reside-6k)
 (4,500 training pairs; 1,000 test pairs).
  
-### AOD-Net and DEA-Net: ReLU vs SAGA
+### AOD-Net: ReLU vs SAGA
  
 ![Dehazing Comparison](images/dehaze_comparison.png)
  
-*(Dehazing comparison on representative RESIDE-6K test images. Each block shows
-(left to right): hazy input, ReLU baseline output, SAGA output, ground truth.
-**Top block:** AOD-Net. **Bottom block:** DEA-Net. SAGA recovers finer structural
-detail at object boundaries — building edges, foliage, road markings — while
-assigning near-zero gate values to uniform haze regions, suppressing artefacts
-in flat sky areas.)*
+*(Dehazing comparison on representative RESIDE-6K test images. (a) hazy input, (b)  ReLU baseline output, (c) SAGA output, (d) ground truth. SAGA recovers finer structural
+detail at object boundaries, while assigning near-zero gate values to uniform haze regions, suppressing artefacts in flat sky areas.)*
  
 > **To reproduce these results**, see the training scripts in the
 > [SAGA GitHub repository](https://github.com/sijuswamyresearch/SAGA).
 > Both architectures require `pip install saga-activation` and a RESIDE-6K
-> download. DEA-Net results are reported at epoch 25; AOD-Net results are
+> download. AOD-Net results are
 > averaged over the full 1,000-image test set.
  
 ---
