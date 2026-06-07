@@ -6,10 +6,10 @@
   "access_right": "open",
   "license": "MIT",
   "creators": [
-    {"name": "Siju K.S.",                    "affiliation": "Author Institution, Kerala, India"},
-    {"name": "Vipin Venugopal",              "affiliation": "Author Institution, Kerala, India"},
-    {"name": "Mithun Kumar Kar",             "affiliation": "Author Institution, Kerala, India"},
-    {"name": "Jayakrishnan Anandakrishnan",  "affiliation": "Author Institution, Kerala, India"}
+    {"name": "Siju K.S.",                    "affiliation": "Amrita Vishwa Vidyapeetham, Kerala, India"},
+    {"name": "Vipin Venugopal",              "affiliation": "Amrita Vishwa Vidyapeetham, Kerala, India"},
+    {"name": "Mithun Kumar Kar",             "affiliation": "Amrita Vishwa Vidyapeetham, Kerala, India"},
+    {"name": "Jayakrishnan Anandakrishnan",  "affiliation": "Amrita Vishwa Vidyapeetham, Kerala, India"}
   ],
   "keywords": [
     "deep learning",
