@@ -16,12 +16,19 @@ pip install saga-activation
 ```
 ## Installing from Source
 
-If you want to modify the gating mechanism or contribute to the repository, you can install it from source in editable mode:
+If you are working in a standard local environment, clone the repository and install it in editable mode:
 
 ```bash
 git clone [https://github.com/sijuswamyresearch/saga-activation.git](https://github.com/sijuswamyresearch/saga-activation.git)
 cd saga-activation
 pip install -e .
+```
+If you are testing SAGA in a notebook environment, you must use the shell prefix (!) and directory magic (%) to install the package directly within a cell:
+
+```bash
+!git clone [https://github.com/sijuswamyresearch/saga-activation.git](https://github.com/sijuswamyresearch/saga-activation.git)
+%cd saga-activation
+!pip install -e .
 ```
 
 ## Verifying the Installation
@@ -33,5 +40,17 @@ from saga import SAGA
 
 act = SAGA(in_channels=64).cuda()
 x = torch.randn(1, 64, 128, 128).cuda()
+print(act(x).shape) # Should output: torch.Size([1, 64, 128, 128])
+```
+
+>**Note:** To ensure maximum compatibility across different environments (from CPU-only laptops to CUDA-enabled servers), we recommend using PyTorch's device-agnostic setup when initializing SAGA:
+
+```bash
+import torch
+from saga import SAGA
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+act = SAGA(in_channels=64).to(device)
+x = torch.randn(1, 64, 128, 128).to(device)
+print(f"Running on: {device}")
 print(act(x).shape) # Should output: torch.Size([1, 64, 128, 128])
 ```

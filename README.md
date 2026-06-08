@@ -31,11 +31,19 @@ This multi-path design lets the network selectively amplify high-frequency bound
 ```bash
 pip install saga-activation
 ```
-Or install from source:
+If you are working in a standard local environment, clone the repository and install it in editable mode:
+
 ```bash
 git clone [https://github.com/sijuswamyresearch/saga-activation.git](https://github.com/sijuswamyresearch/saga-activation.git)
 cd SAGA
 pip install -e ".[dev]"
+```
+>**Note:** If you are testing SAGA in a notebook environment, you must use the shell prefix (!) and directory magic (%) to install the package directly within a cell:
+
+```bash
+!git clone [https://github.com/sijuswamyresearch/saga-activation.git](https://github.com/sijuswamyresearch/saga-activation.git)
+%cd saga-activation
+!pip install -e .
 ```
 
 Requirements: `Python ≥ 3.10`, `PyTorch ≥ 2.0`
@@ -54,7 +62,20 @@ act = SAGA(in_channels=64)
 x   = torch.randn(2, 64, 256, 256)  # (Batch, Channels, Height, Width)
 
 # Forward pass preserves exact tensor shape
-y   = act(x)                        # Output shape: (2, 64, 256, 256)
+y   = act(x)                        
+print(y.shape) # Should output: torch.Size([1, 64, 128, 128])# Output shape: (2, 64, 256, 256)
+```
+
+>**Note:** To ensure maximum compatibility across different environments (from CPU-only laptops to CUDA-enabled servers), we recommend using PyTorch's device-agnostic setup when initializing SAGA:
+
+```bash
+import torch
+from saga import SAGA
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+act = SAGA(in_channels=64).to(device)
+x = torch.randn(1, 64, 128, 128).to(device)
+print(f"Running on: {device}")
+print(act(x).shape) # Should output: torch.Size([1, 64, 128, 128])
 ```
 
 ### Inside a U-Net or ResNet block
