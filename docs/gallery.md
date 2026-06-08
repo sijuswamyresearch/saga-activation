@@ -94,7 +94,7 @@ structural change.
 | ---------------------------------------------------------------------------- | ---------- | ----------- | --------- | ------------ |
 | [AOD-Net](https://github.com/Boyiliee/AOD-Net) (Li et al., ICCV 2017)       | ReLU       | 22.31       | 0.861     | —            |
 |                                                                              | **SAGA**   | **23.79**   | **0.881** | ~210       |
-| **Mean SAGA gain**                                                           |            | **+1.54 dB**| **+0.018**|              |
+| **Mean SAGA gain**                                                           |            | **+1.48 dB**| **+0.020**|              |
  
 > AOD-Net results averaged over the full RESIDE-6K test set (1,000 images).
  
