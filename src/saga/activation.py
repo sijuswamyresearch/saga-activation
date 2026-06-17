@@ -91,22 +91,13 @@ if HAS_TRITON:
 
 
 # =========================================================================
-# PyTorch Autograd Function (Tracks both outputs internally)
+# PyTorch Autograd Function (Triton Path Only)
 # =========================================================================
 class SAGAFusedFunction(torch.autograd.Function):
     @staticmethod
     def forward(ctx, x, tx, gx, temperature):
         ctx.temperature = temperature
         
-        if not HAS_TRITON or not x.is_cuda:
-            ctx.eager_mode = True
-            boost = F.relu(tx - x)
-            gate = torch.sigmoid(gx / temperature)
-            out = x + (gate * boost)
-            ctx.save_for_backward(x, tx, gx)
-            return out, gate
-
-        ctx.eager_mode = False
         x, tx, gx = x.contiguous(), tx.contiguous(), gx.contiguous()
         out = torch.empty_like(x)
         gate = torch.empty_like(x)
@@ -126,17 +117,6 @@ class SAGAFusedFunction(torch.autograd.Function):
         # Handle instances where external gate alignment loss gradients are not provided
         if dgate_ext is None:
             dgate_ext = torch.zeros_like(dout)
-
-        if ctx.eager_mode:
-            with torch.enable_grad():
-                x.requires_grad_(True)
-                tx.requires_grad_(True)
-                gx.requires_grad_(True)
-                boost = F.relu(tx - x)
-                gate = torch.sigmoid(gx / temperature)
-                out = x + (gate * boost)
-                torch.autograd.backward([out, gate], [dout, dgate_ext])
-            return x.grad, tx.grad, gx.grad, None
 
         dout, dgate_ext = dout.contiguous(), dgate_ext.contiguous()
         dx, dtx, dgx = torch.empty_like(x), torch.empty_like(tx), torch.empty_like(gx)
@@ -196,8 +176,16 @@ class SAGA(nn.Module):
         T_x = self.spatial_bn(self.spatial_conv(x))
         G_x = self.gate_generator(T_x)
         
-        # Internal autograd always handles dual gradient calculations safely
-        out, gate = SAGAFusedFunction.apply(x, T_x, G_x, self.temperature)
+        # 1. High-Speed Triton Path (Linux & CUDA only)
+        if HAS_TRITON and x.is_cuda:
+            out, gate = SAGAFusedFunction.apply(x, T_x, G_x, self.temperature)
+            
+        # 2. Native PyTorch Eager Fallback (Windows / CPU / Mac)
+        else:
+            boost = F.relu(T_x - x)
+            # init_bias is already included in G_x via the convolution layer bias
+            gate = torch.sigmoid(G_x / self.temperature)
+            out = x + (gate * boost)
         
         if self.return_gate:
             return out, gate
