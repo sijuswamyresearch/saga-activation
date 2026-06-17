@@ -11,13 +11,13 @@ import torch
 def set_deterministic_seed():
     """Ensures all random initializations are reproducible across test runs."""
     torch.manual_seed(42)
-    if torch.cuda.is_cuda_available():
+    if torch.cuda.is_available():
         torch.cuda.manual_seed_all(42)
 
 @pytest.fixture
 def device():
     """Dynamically routes tests to CUDA if available, otherwise falls back to CPU."""
-    return torch.device("cuda" if torch.cuda.is_cuda_available() else "cpu")
+    return torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 @pytest.fixture
 def sample_tensor(device):
