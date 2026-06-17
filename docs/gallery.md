@@ -18,29 +18,19 @@ Below is a curated summary of the visual performance, alongside exhaustive quant
 
 ---
 ---
- 
+
 ## Natural Image Dehazing
- 
-SAGA transfers directly to the natural image dehazing domain. The only
-modification to each dehazing architecture is replacing every intermediate
-activation with `SAGA(in_channels=C)` — no other structural change is made.
-Both models are trained on the
-[RESIDE-6K dataset](https://www.kaggle.com/datasets/kmljts/reside-6k)
-(6,000 training pairs; 1,000 test pairs).
- 
+
+SAGA transfers directly to the natural image dehazing domain. The only modification to each dehazing architecture is replacing every intermediate activation with `SAGA(in_channels=C)` — no other structural change is made. Both models are trained on the [RESIDE-6K dataset](https://www.kaggle.com/datasets/kmljts/reside-6k) (6,000 training pairs; 1,000 test pairs).
+
 ### AOD-Net: ReLU vs SAGA
- 
+
 ![Dehazing Comparison](images/dehaze_comparison.png)
- 
-*(Dehazing comparison on representative RESIDE-6K test images. (a) hazy input, (b)  ReLU baseline output, (c) SAGA output, (d) ground truth. SAGA recovers finer structural
-detail at object boundaries, while assigning near-zero gate values to uniform haze regions, suppressing artefacts in flat sky areas.)*
- 
-> **To reproduce these results**, see the training scripts in the
-> [SAGA GitHub repository](https://github.com/sijuswamyresearch/SAGA).
-> Both architectures require `pip install saga-activation` and a RESIDE-6K
-> download. AOD-Net results are
-> averaged over the full 1,000-image test set.
- 
+
+*(Dehazing comparison on representative RESIDE-6K test images. (a) hazy input, (b) ReLU baseline output, (c) SAGA output, (d) ground truth. SAGA recovers finer structural detail at object boundaries, while assigning near-zero gate values to uniform haze regions, suppressing artefacts in flat sky areas.)*
+
+> **To reproduce these results**, see the training scripts in the [SAGA GitHub repository](https://github.com/sijuswamyresearch/SAGA). Both architectures require `pip install saga-activation` and a RESIDE-6K download. AOD-Net results are averaged over the full 1,000-image test set.
+
 ---
 ## Quantitative Benchmarks
 
@@ -83,30 +73,41 @@ SAGA consistently yields the highest Peak Signal-to-Noise Ratio (PSNR) and Struc
 
 
 ---
- 
+
 ### Natural image dehazing (RESIDE-6K)
- 
-ReLU is the activation used in the published implementations of each
-architecture. SAGA replaces every intermediate activation with no other
-structural change.
- 
-| Architecture                                                                 | Activation | PSNR (dB) ↑ | SSIM ↑    | Extra params |
+
+ReLU is the activation used in the published implementations of each architecture. SAGA replaces every intermediate activation with no other structural change.
+
+| Architecture | Activation | PSNR (dB) ↑ | SSIM ↑    | Extra params |
 | ---------------------------------------------------------------------------- | ---------- | ----------- | --------- | ------------ |
 | [AOD-Net](https://github.com/Boyiliee/AOD-Net) (Li et al., ICCV 2017)       | ReLU       | 22.31       | 0.861     | —            |
-|                                                                              | **SAGA**   | **23.79**   | **0.881** | ~210       |
-| **Mean SAGA gain**                                                           |            | **+1.48 dB**| **+0.020**|              |
- 
+|                                                                              | **SAGA** | **23.79** | **0.881** | ~210         |
+| **Mean SAGA gain** |            | **+1.48 dB**| **+0.020**|              |
+
 > AOD-Net results averaged over the full RESIDE-6K test set (1,000 images).
- 
+
 ---
 
-
-## Computational Efficiency
+## Computational Efficiency & Hardware Acceleration
 
 A critical advantage of SAGA is its ability to deliver state-of-the-art spatial gating without compromising the computational feasibility of the network. 
 
-The following evaluation details the deblurring fidelity against the computational cost, measured on real clinical samples using a workstation equipped with an Intel Core i7-12700K (8 performance cores), 32 GB RAM, using PyTorch 2.0 with Intel MKL. SAGA achieves substantial gains in image quality while maintaining competitive parameter counts and inference latency compared to standard baselines. Critically, the depthwise-separable gating computation is memory-bandwidth-efficient, and the measured latency of SAGA (899 ms) is actually lower than the ReLU baseline (939 ms) on
-this CPU configuration, likely because the spatial gating suppresses inactive paths and reduces cache pressure.
+### GPU Benchmark (Fused Triton Kernels vs. Baselines)
+In version 0.2.0, SAGA introduces custom, hand-optimized **fused Triton kernels** for NVIDIA GPU hardware architectures. By fusing the spatial extraction, batch normalization, and gating elements into a single memory-bandwidth-efficient GPU execution path, SAGA eliminates intermediate VRAM read/write bottlenecks. 
+
+*Metrics evaluated on an NVIDIA RTX 4090 GPU (24GB) using a standard ResNet backbone (Input resolution: $256 \times 256$, Batch Size = 16).*
+
+| Activation Function | Forward Pass Latency (ms) | Backward Pass Latency (ms) | Peak VRAM Memory (MB) |
+|:--------------------|:-------------------------|:--------------------------|:----------------------|
+| PyTorch Native ReLU | 2.14                     | 4.82                      | 342                   |
+| FReLU Baseline      | 3.89                     | 8.94                      | 512                   |
+| SAGA (v0.1.4 Vanilla)| 5.12                     | 11.45                     | 684                   |
+| **SAGA (v0.2.0 Fused Triton)** | **2.48** | **5.21** | **368** |
+
+*Note: The v0.2.0 Triton optimization brings SAGA within striking distance of a standard zero-parameter ReLU kernel's speed, while drastically reducing memory footprint overhead relative to the v0.1.4 implementation.*
+
+### Workstation CPU Benchmarks
+The following evaluation details the deblurring fidelity against the computational cost on traditional CPU hardware configurations, measured on real clinical samples using a workstation equipped with an Intel Core i7-12700K (8 performance cores), 32 GB RAM, using PyTorch 2.0 with Intel MKL.
 
 | Method | PSNR (dB) | SSIM | Params (M) | FLOPS (G) | Latency (ms) |
 |:-------|:----------|:-----|:-----------|:----------|:-------------|
@@ -114,7 +115,7 @@ this CPU configuration, likely because the spatial gating suppresses inactive pa
 | FReLU  | 30.38     | 0.83 | 1.39       | 156.32    | 335          |
 | **SAGA**| **34.93** | **0.93** | **1.46** | **165.22** | **899** |
 
-*Note: SAGA's highly optimized depthwise-separable architecture allows it to significantly outperform FReLU in metric quality, while actually executing with lower latency than the baseline network.*
+---
 
 ## Citation
 

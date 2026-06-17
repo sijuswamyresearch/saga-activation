@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "saga-activation"
-version = "0.1.4"
-description = "Spatially-Adaptive Gated Activation (SAGA) for medical image restoration"
+version = "0.2.0"
+description = "Spatially-Adaptive Gated Activation (SAGA) with Fused Triton Optimization"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
@@ -16,7 +16,7 @@ authors = [
 ]
 keywords = [
   "deep learning", "activation function", "medical imaging",
-  "image restoration", "deblurring", "PyTorch",
+  "image restoration", "deblurring", "PyTorch", "triton", "interpretability"
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -35,6 +35,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+triton = [
+  "triton>=2.1.0",
+]
 dev = [
   "pytest>=7.0",
   "pytest-cov>=4.0",
@@ -51,6 +54,7 @@ Documentation = "https://saga-activation.readthedocs.io/en/latest/"
 Repository    = "https://github.com/sijuswamyresearch/saga-activation"
 "Bug Tracker" = "https://github.com/sijuswamyresearch/saga-activation/issues"
 Paper         = "https://doi.org/10.1016/j.health.2026.100468"
+
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["saga*"]

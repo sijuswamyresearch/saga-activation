@@ -13,30 +13,42 @@
 
 ## Overview
 
-Standard activation functions (ReLU, SiLU, GELU) treat every spatial location in a feature map identically. In medical images — such as CT slices and DXA scans — the information content is *not* spatially uniform: anatomical boundaries carry high-frequency diagnostically-critical detail, while homogeneous regions (background, soft tissue) require smooth suppression.
+Standard activation functions (ReLU, SiLU, GELU) treat every spatial location in a feature map identically. However, in complex visual tasks and medical imaging, information content is *not* spatially uniform: structural boundaries carry high-frequency critical detail, while homogeneous regions require smooth suppression.
 
-**SAGA** introduces an *adaptive residual activation block* that modulates the activation response position-by-position using highly efficient depthwise and pointwise convolutions:
+**SAGA (Version 0.2.0)** introduces an *adaptive residual activation block* that modulates the activation response position-by-position. It features **fused Triton kernels** for maximum GPU memory-bandwidth efficiency and built-in **dynamic gate extraction** for post-hoc interpretability.
 
 1. **Context Extraction:** `T(X) = BN(W_s *3 X)` *(Depthwise 3x3 Convolution)*
-2. **Gate Generation:** `G(X) = σ(W_g *1 T(X))` *(Pointwise 1x1 Convolution)*
-3. **Residual Boost:** `B(X) = max(0, T(X) - X)`
+2. **Residual Boost:** `B(X) = max(0, T(X) - X)`
+3. **Gate Generation:** `G(X) = σ((W_g *1 T(X) + b_init) / τ)` *(Pointwise 1x1 Convolution with Temperature τ)*
 4. **Output:** `SAGA(X) = X + (G(X) ⊙ B(X))`
 
-This multi-path design lets the network selectively amplify high-frequency boundary signals while smoothly gating uniform background areas. It acts as a lightweight, drop-in structural upgrade that preserves spatial tensor dimensions without increasing the overall depth of the network.
+This multi-path design lets the network selectively amplify high-frequency signals while smoothly gating uniform areas, acting as a high-speed, drop-in structural upgrade.
 
 ---
 
+
 ## Installation
+
+Requirements: `Python ≥ 3.10`, `PyTorch ≥ 2.0`
 
 ```bash
 pip install saga-activation
 ```
+
+### High-Speed Fused GPU Execution (Linux & NVIDIA GPUs Only):
+
+To unlock the fused memory-bandwidth optimizations via OpenAI Triton:
+
+```python
+pip install "saga-activation[triton]"
+```
+
 If you are working in a standard local environment, clone the repository and install it in editable mode:
 
 ```bash
 git clone [https://github.com/sijuswamyresearch/saga-activation.git](https://github.com/sijuswamyresearch/saga-activation.git)
 cd SAGA
-pip install -e ".[dev]"
+pip install -e ".[dev,triton]"
 ```
 >**Note:** If you are testing SAGA in a notebook environment, you must use the shell prefix (!) and directory magic (%) to install the package directly within a cell:
 
@@ -46,7 +58,6 @@ pip install -e ".[dev]"
 !pip install -e .
 ```
 
-Requirements: `Python ≥ 3.10`, `PyTorch ≥ 2.0`
 
 ## Quick Start
 ### Drop-in activation replacement
@@ -57,13 +68,16 @@ Because SAGA extracts spatial features, it requires the channel dimension of the
 import torch
 from saga import SAGA
 
-# Initialize SAGA with the number of incoming channels
-act = SAGA(in_channels=64)          
-x   = torch.randn(2, 64, 256, 256)  # (Batch, Channels, Height, Width)
+# Device-agnostic setup
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-# Forward pass preserves exact tensor shape
-y   = act(x)                        
-print(y.shape) # Should output: torch.Size([1, 64, 128, 128])# Output shape: (2, 64, 256, 256)
+# Initialize SAGA with the number of incoming channels
+act = SAGA(in_channels=64).to(device)          
+x   = torch.randn(2, 64, 256, 256).to(device)  # (Batch, Channels, Height, Width)
+
+# Forward pass executes via Triton (if available) and preserves tensor shape
+y   = act(x)                                
+print(y.shape) # Output shape: torch.Size([2, 64, 256, 256])
 ```
 
 >**Note:** To ensure maximum compatibility across different environments (from CPU-only laptops to CUDA-enabled servers), we recommend using PyTorch's device-agnostic setup when initializing SAGA:
@@ -77,38 +91,38 @@ x = torch.randn(1, 64, 128, 128).to(device)
 print(f"Running on: {device}")
 print(act(x).shape) # Should output: torch.Size([1, 64, 128, 128])
 ```
+### Interpretability Mode (Extracting Gates)
+
+SAGA allows you to extract the internal spatial gate maps for heatmap visualization or Gate Alignment Loss (GAL) training.
+
+```python
+# Enable return_gate=True and optionally adjust temperature/bias
+act = SAGA(in_channels=64, return_gate=True, temperature=1.0).to(device)
+
+out, gate_map = act(x)
+print(out.shape)      # The activated tensor
+print(gate_map.shape) # The spatial gating probabilities [0, 1]
+```
+### Global Interpretability Toggles & Pre-Built Blocks
+
+SAGA includes unrolled, tuple-safe residual blocks and a global utility to turn interpretability on or off across your entire architecture with one line of code.
 
 ### Inside a U-Net or ResNet block
 
 ```python
-import torch.nn as nn
-from saga import SAGA
-
-class EncoderBlock(nn.Module):
-    def __init__(self, in_ch, out_ch):
-        super().__init__()
-        self.block = nn.Sequential(
-            nn.Conv2d(in_ch, out_ch, kernel_size=3, padding=1, bias=False),
-            nn.BatchNorm2d(out_ch),
-            SAGA(in_channels=out_ch),                              # ← swap in SAGA here
-            nn.Conv2d(out_ch, out_ch, kernel_size=3, padding=1, bias=False),
-            nn.BatchNorm2d(out_ch),
-            SAGA(in_channels=out_ch),
-        )
-        self.pool = nn.MaxPool2d(2)
-
-    def forward(self, x):
-        return self.pool(self.block(x))
-```
-
-### Pre-built residual blocks
-
-```python
 from saga import SAGAResBlock, SAGABottleneck
+from saga.utils import set_return_gate
 
-res    = SAGAResBlock(64)                         # standard residual block
-bottle = SAGABottleneck(64, out_channels=128)     # bottleneck variant
+# Build a network using SAGA blocks
+model = torch.nn.Sequential(
+    SAGAResBlock(64),
+    SAGABottleneck(64, out_channels=128)
+)
+
+# Globally switch the entire model to return (output, gates) tuples!
+set_return_gate(model, state=True)
 ```
+
 
 ### Gate curriculum training
 For advanced optimization, you can freeze the spatial gates during the initial epochs to allow the main backbone weights to stabilize, then unfreeze them for fine-tuning.

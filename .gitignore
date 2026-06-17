@@ -1,10 +1,22 @@
 # Virtual Environments
 venv/
 env/
+.venv/
+
+# IDEs / Editors
+.vscode/
 
 # Python Cache
 __pycache__/
 *.pyc
+*.pyo
+
+# Testing & Coverage (New for v0.2.0)
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
 # doc files
 docs/_build/
 
@@ -12,6 +24,7 @@ docs/_build/
 dist/
 build/
 *.egg-info/
+.eggs/
 
 # Datasets
 data/

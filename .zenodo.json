@@ -1,7 +1,7 @@
 {
   "title": "SAGA: Spatially-Adaptive Gated Activation for Medical Image Restoration",
-  "description": "Python package implementing the SAGA activation operator introduced in 'An interpretable deep learning method for medical image deblurring and restoration' (Healthcare Analytics, 2026). Includes the core SAGA module, pre-built residual blocks, utilities for gate curriculum training, and a full pytest test suite.",
-  "version": "0.1.4",
+  "description": "Python package implementing the SAGA activation operator introduced in 'An interpretable deep learning method for medical image deblurring and restoration' (Healthcare Analytics, 2026). Version 0.2.0 introduces fused Triton kernel optimizations for accelerated performance and expanded support for dynamic gate map extraction and interpretability routing in general deep vision architectures.",
+  "version": "0.2.0",
   "upload_type": "software",
   "access_right": "open",
   "license": "MIT",
@@ -19,7 +19,10 @@
     "deblurring",
     "PyTorch",
     "spatial gating",
-    "CNN"
+    "CNN",
+    "triton",
+    "fused kernel",
+    "interpretability"
   ],
   "related_identifiers": [
     {
