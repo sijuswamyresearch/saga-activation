@@ -111,8 +111,8 @@ The following evaluation details the deblurring fidelity against the computation
 
 | Method | PSNR (dB) | SSIM | Params (M) | FLOPS (G) | Latency (ms) |
 |:-------|:----------|:-----|:-----------|:----------|:-------------|
-| ReLU   | 31.39     | 0.85 | 1.38       | 154.81    | 939          |
-| FReLU  | 30.38     | 0.83 | 1.39       | 156.32    | 335          |
+| ReLU   | 31.39     | 0.85 | 1.38       | 154.81    | 335           |
+| FReLU  | 30.38     | 0.83 | 1.39       | 156.32    | 939         |
 | **SAGA**| **34.93** | **0.93** | **1.46** | **165.22** | **899** |
 
 ---
